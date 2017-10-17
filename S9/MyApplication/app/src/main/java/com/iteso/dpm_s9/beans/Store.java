@@ -10,20 +10,35 @@ import java.util.ArrayList;
  */
 
 public class Store implements Parcelable {
-    String name;
-    ArrayList<ItemProduct> products;
+    private Integer id;
+    private String name;
+    private String phone;
+    private City city;
+    private Integer thumbnail;
+    private Double latitude;
+    private Double longitude;
 
-    public Store(String name, ArrayList<ItemProduct> products) {
+    public Store(){
+
+    }
+
+    public Store(Integer id, String name, String phone, City city, Integer thumbnail, Double latitude, Double longitude) {
+        this.id = id;
         this.name = name;
-        this.products = products;
+        this.phone = phone;
+        this.city = city;
+        this.thumbnail = thumbnail;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     protected Store(Parcel in) {
         name = in.readString();
-        products = in.createTypedArrayList(ItemProduct.CREATOR);
+        phone = in.readString();
+        city = in.readParcelable(City.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Store> CREATOR = new Creator<Store>() {
+    public static final Creator<Store> CREATOR = new Creator<Store>() {
         @Override
         public Store createFromParcel(Parcel in) {
             return new Store(in);
@@ -35,6 +50,62 @@ public class Store implements Parcelable {
         }
     };
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public Integer getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(Integer thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -43,6 +114,7 @@ public class Store implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
-        parcel.writeTypedList(products);
+        parcel.writeString(phone);
+        parcel.writeParcelable(city, i);
     }
 }

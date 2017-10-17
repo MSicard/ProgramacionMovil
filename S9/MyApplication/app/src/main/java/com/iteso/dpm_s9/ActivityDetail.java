@@ -2,6 +2,7 @@ package com.iteso.dpm_s9;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,12 +28,13 @@ public class ActivityDetail extends AppCompatActivity{
         image = (ImageView) findViewById(R.id.activity_detail_image);
         save = (Button) findViewById(R.id.activity_detail_save);
 
-        ItemProduct product = getIntent().getParcelableExtra("ITEM");
-        title.setText(product.getTitle());
-        location.setText(product.getLocation());
-        store.setText(product.getStore());
+        final ItemProduct itemProduct = getIntent().getParcelableExtra("ITEM");
+        title.setText(itemProduct.getTitle());
+        store.setText(itemProduct.getStore().getName());
+        location.setText(itemProduct.getStore().getCity().getName());
 
-        switch (product.getImage()){
+
+        switch (itemProduct.getImage()){
             case 0:
                 image.setImageResource(R.drawable.mac);
                 break;
@@ -40,5 +42,15 @@ public class ActivityDetail extends AppCompatActivity{
                 image.setImageResource(R.drawable.alienware);
                 break;
         }
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemProduct.setImage(image.getId());
+                itemProduct.setTitle(title.getText().toString());
+                itemProduct.getStore().setName(store.getText().toString());
+                itemProduct.getStore().getCity().setName(location.getText().toString());
+            }
+        });
     }
 }

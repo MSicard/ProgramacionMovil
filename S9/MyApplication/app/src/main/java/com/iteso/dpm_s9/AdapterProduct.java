@@ -39,12 +39,15 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
         return vh;
     }
 
+
     @Override
     public void onBindViewHolder(AdapterProduct.ViewHolder holder, final int position) {
         holder.mProductTitle.setText(mDataSet.get(position).getTitle());
-        holder.mProductStore.setText(mDataSet.get(position).getStore());
-        holder.mProductLocation.setText(mDataSet.get(position).getLocation());
-        holder.mProductPhone.setText(mDataSet.get(position).getPhone());
+        holder.mProductStore.setText(mDataSet.get(position).getStore().getName());
+        holder.mProductLocation.setText(
+                mDataSet.get(position).getStore().getCity().getName() + ", Jalisco");
+        holder.mProductPhone.setText(mDataSet.get(position).getStore().getPhone());
+        holder.mProductLocation.setText(mDataSet.get(position).getStore().getCity().getName());
         switch(mDataSet.get(position).getImage()){
             case 0:
                 holder.mProductImage.setImageResource(R.drawable.mac); break;
@@ -53,6 +56,7 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
         }
         Bitmap bitmap = ((BitmapDrawable)holder.mProductThumbnail.getDrawable()).getBitmap();
         //holder.mProductThumbnail.setImageBitmap(Tool.getRoundedBitmap(bitmap));
+
 
         holder.mDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +70,7 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL,
-                        Uri.parse("tel:" + mDataSet.get(position).getPhone()));
+                        Uri.parse("tel:" + mDataSet.get(position).getStore().getPhone()));
                 context.startActivity(intent);
             }
         });

@@ -1,5 +1,6 @@
 package com.iteso.dpm_s9.beans;
 
+import android.content.ClipData;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,28 +9,51 @@ import android.os.Parcelable;
  */
 
 public class ItemProduct implements Parcelable{
+    private int code;
     private int image;
-    private String title, location, store, phone, description;
+    private String title;
+    private String description;
+    private Category category;
+    private Store store;
 
-    public ItemProduct() {
-        image = 0;
-        title = "";
-        location = "";
-        store = "";
-        phone = "";
-        description = "";
+    public ItemProduct(){
+
+    }
+
+    public ItemProduct(int code, int image, String title, String description, Category category, Store store) {
+        this.code = code;
+        this.image = image;
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.store = store;
     }
 
     protected ItemProduct(Parcel in) {
+        code = in.readInt();
         image = in.readInt();
         title = in.readString();
-        location = in.readString();
-        store = in.readString();
-        phone = in.readString();
         description = in.readString();
+        category = in.readParcelable(Category.class.getClassLoader());
+        store = in.readParcelable(Store.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<ItemProduct> CREATOR = new Creator<ItemProduct>() {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(code);
+        dest.writeInt(image);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeParcelable(category, flags);
+        dest.writeParcelable(store, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<ItemProduct> CREATOR = new Creator<ItemProduct>() {
         @Override
         public ItemProduct createFromParcel(Parcel in) {
             return new ItemProduct(in);
@@ -41,19 +65,12 @@ public class ItemProduct implements Parcelable{
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public int getCode() {
+        return code;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(image);
-        parcel.writeString(title);
-        parcel.writeString(location);
-        parcel.writeString(store);
-        parcel.writeString(phone);
-        parcel.writeString(description);
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public int getImage() {
@@ -72,30 +89,6 @@ public class ItemProduct implements Parcelable{
         this.title = title;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getStore() {
-        return store;
-    }
-
-    public void setStore(String store) {
-        this.store = store;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -104,16 +97,19 @@ public class ItemProduct implements Parcelable{
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "ItemProduct{" +
-                "image=" + image +
-                ", title='" + title + '\'' +
-                ", location='" + location + '\'' +
-                ", store='" + store + '\'' +
-                ", phone='" + phone + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+    public Category getCategory() {
+        return category;
     }
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
 }

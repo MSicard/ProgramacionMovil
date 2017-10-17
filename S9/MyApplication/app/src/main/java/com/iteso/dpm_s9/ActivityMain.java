@@ -1,5 +1,6 @@
 package com.iteso.dpm_s9;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.iteso.dpm_s9.beans.ItemProduct;
+
 import java.util.Locale;
 
 public class ActivityMain extends AppCompatActivity {
@@ -26,6 +29,7 @@ public class ActivityMain extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     SectionsPagerAdapter mSectionsPagerAdapter;
+    private FragmentTechnology fragmentTechnology;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +76,9 @@ public class ActivityMain extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             switch(position){
-                case 0: return new FragmentTechnology();
+                case 0:
+                    fragmentTechnology = new FragmentTechnology();
+                    return fragmentTechnology;
                 case 1: return new FragmentHome();
                 case 2: return new FragmentElectronics();
                 default: return new FragmentTechnology();
@@ -110,10 +116,26 @@ public class ActivityMain extends AppCompatActivity {
                 clearPreferences();
                 return true;
             case R.id.activity_main_products:
-                return true;
+                Intent products = new Intent(this, ActivityProduct.class);
+                startActivityForResult(products, Constants.INTENT_PRODUCTS_NOTIFY);
+                break;
         }
         return true;
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case Constants.INTENT_PRODUCTS_NOTIFY:
+                if (resultCode == Activity.RESULT_OK) {
+                    if(data != null){
+                        ItemProduct itemProduct = data.getParcelableExtra("ITEM");
+                        if(itemProduct.getCategory().getName().equalsIgnoreCase("TECHNOLOGY")){
+                            fragmentTechnology.notifyDataSetChanged(itemProduct);
+                        }
+                    }
+                }
+                break;
+        }
 
     private void clearPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences("com.iteso.depm_s9.CACAHUATE",
