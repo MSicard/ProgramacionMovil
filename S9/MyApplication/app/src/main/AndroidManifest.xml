@@ -24,6 +24,7 @@
         <activity android:name=".ActivityLogin" />
         <activity android:name=".ActivityMain" />
         <activity android:name=".ActivityPrivacyPolicy"></activity>
+        <activity android:name=".ActivityProduct"/>
     </application>
 
 </manifest>

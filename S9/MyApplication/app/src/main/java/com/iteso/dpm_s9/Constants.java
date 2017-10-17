@@ -6,5 +6,5 @@ package com.iteso.dpm_s9;
 
 public class Constants {
 
-    public static String INTENT_PRODUCTS_NOTIFY;
+    public static final int INTENT_PRODUCTS_NOTIFY = 1000;
 }

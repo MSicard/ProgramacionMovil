@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.widget.Spinner;
 import com.iteso.dpm_s9.beans.Category;
 import com.iteso.dpm_s9.beans.ItemProduct;
 import com.iteso.dpm_s9.beans.Store;
+import com.iteso.dpm_s9.database.CategoryControl;
 import com.iteso.dpm_s9.database.DataBaseHandler;
 import com.iteso.dpm_s9.database.ItemProductControl;
 import com.iteso.dpm_s9.database.StoreControl;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
  * Created by Maritza on 16/10/2017.
  */
 
-public class ActivityProduct extends Activity {
+public class ActivityProduct extends AppCompatActivity {
 
     protected Spinner stores;
     protected Spinner categories;
@@ -116,6 +118,16 @@ public class ActivityProduct extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isValidProduct() {
+        if(!stores.isSelected()) return false;
+        if(!categories.isSelected())return false;
+        if(!images.isSelected())return false;
+        if(id.getText().toString() == "") return false;
+        if(title.getText().toString() == "")return false;
+        if(description.getText().toString() == "")return false;
+        return true;
     }
 
     public void setCategorySelected(int categoryId){

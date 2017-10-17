@@ -30,6 +30,8 @@ public class ActivityMain extends AppCompatActivity {
     private ViewPager viewPager;
     SectionsPagerAdapter mSectionsPagerAdapter;
     private FragmentTechnology fragmentTechnology;
+    private FragmentHome fragmentHome;
+    private FragmentElectronics fragmentElectronics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +81,12 @@ public class ActivityMain extends AppCompatActivity {
                 case 0:
                     fragmentTechnology = new FragmentTechnology();
                     return fragmentTechnology;
-                case 1: return new FragmentHome();
-                case 2: return new FragmentElectronics();
+                case 1:
+                    fragmentHome = new FragmentHome();
+                    return new FragmentHome();
+                case 2:
+                    fragmentElectronics = new FragmentElectronics();
+                    return new FragmentElectronics();
                 default: return new FragmentTechnology();
             }
         }
@@ -124,19 +130,19 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode) {
+        switch (requestCode) {
             case Constants.INTENT_PRODUCTS_NOTIFY:
                 if (resultCode == Activity.RESULT_OK) {
-                    if(data != null){
+                    if (data != null) {
                         ItemProduct itemProduct = data.getParcelableExtra("ITEM");
-                        if(itemProduct.getCategory().getName().equalsIgnoreCase("TECHNOLOGY")){
+                        if (itemProduct.getCategory().getName().equalsIgnoreCase("TECHNOLOGY")) {
                             fragmentTechnology.notifyDataSetChanged(itemProduct);
                         }
                     }
                 }
                 break;
         }
-
+    }
     private void clearPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences("com.iteso.depm_s9.CACAHUATE",
                 Context.MODE_PRIVATE);

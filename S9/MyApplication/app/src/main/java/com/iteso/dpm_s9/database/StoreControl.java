@@ -4,8 +4,12 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.iteso.dpm_s9.beans.Category;
 import com.iteso.dpm_s9.beans.City;
+import com.iteso.dpm_s9.beans.ItemProduct;
 import com.iteso.dpm_s9.beans.Store;
+
+import java.util.ArrayList;
 
 /**
  * Created by Maritza on 16/10/2017.
@@ -95,5 +99,70 @@ public class StoreControl {
         cursor = null;
 // return store
         return store;
+    }
+
+    public ArrayList<Store> getStoresWhere(String strWhere, String strOrderBy, DataBaseHandler dh) {
+
+        ArrayList<Store> stores = new ArrayList<Store>();
+        String query;
+        if(strWhere != null){
+            query = "SELECT S." + DataBaseHandler.KEY_STORE_ID + ","
+                    + "S." + DataBaseHandler.KEY_STORE_LAT + ","
+                    + "S." + DataBaseHandler.KEY_STORE_LNG + ","
+                    + "S." + DataBaseHandler.KEY_STORE_NAME + ","
+                    + "S." + DataBaseHandler.KEY_STORE_PHONE + ","
+                    + "S." + DataBaseHandler.KEY_STORE_THUMBNAIL + ","
+                    + "C." + DataBaseHandler.KEY_CITY_ID + ","
+                    + "C." + DataBaseHandler.KEY_CITY_NAME + " FROM "
+                    + DataBaseHandler.TABLE_STORE + " S, "
+                    + DataBaseHandler.TABLE_CITY + " C WHERE"
+                    + " S." + DataBaseHandler.KEY_STORE_CITY
+                    + " = C." + DataBaseHandler.KEY_CITY_ID + " AND "
+                    + strWhere + " ORDER BY " + strOrderBy;
+        }else{
+            query = "SELECT S." + DataBaseHandler.KEY_STORE_ID + ","
+                    + "S." + DataBaseHandler.KEY_STORE_LAT + ","
+                    + "S." + DataBaseHandler.KEY_STORE_LNG + ","
+                    + "S." + DataBaseHandler.KEY_STORE_NAME + ","
+                    + "S." + DataBaseHandler.KEY_STORE_PHONE + ","
+                    + "S." + DataBaseHandler.KEY_STORE_THUMBNAIL + ","
+                    + "C." + DataBaseHandler.KEY_CITY_ID + ","
+                    + "C." + DataBaseHandler.KEY_CITY_NAME + " FROM "
+                    + DataBaseHandler.TABLE_STORE + " S, "
+                    + DataBaseHandler.TABLE_CITY + " C WHERE"
+                    + " S." + DataBaseHandler.KEY_STORE_CITY
+                    + " = C." + DataBaseHandler.KEY_CITY_ID
+                    + " ORDER BY " + strOrderBy;
+        }
+
+        SQLiteDatabase db = dh.getReadableDatabase();
+
+        // El null funcion como en el where del delete, ahi iria el arreglo
+        Cursor cursor = db.rawQuery(query,null);
+
+        while (cursor.moveToNext()) {
+            Store store = new Store();
+            store.setId(cursor.getInt(0));
+            store.setLatitude(cursor.getDouble(1));
+            store.setLongitude(cursor.getDouble(2));
+            store.setName(cursor.getString(3));
+            store.setPhone(cursor.getString(4));
+            store.setThumbnail(cursor.getInt(5));
+            City city = new City();
+            city.setIdCity(cursor.getInt(6));
+            city.setName(cursor.getString(7));
+            store.setCity(city);
+            stores.add(store);
+        }
+
+        try {
+            db.close();
+        } catch (Exception e) {
+
+        }
+        db = null;
+        cursor = null;
+
+        return stores;
     }
 }

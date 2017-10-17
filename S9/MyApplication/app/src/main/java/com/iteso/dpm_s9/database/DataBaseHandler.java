@@ -92,6 +92,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 + " (" + KEY_STORE_NAME + "," + KEY_STORE_PHONE + ","
                 + KEY_STORE_CITY + "," + KEY_STORE_THUMBNAIL + ","
                 + KEY_STORE_LAT + "," + KEY_STORE_LNG + ") VALUES ('BESTBUY', '01 800 237 8289', 2, 0, 20.6489713, -103.4207757)");
+        db.execSQL("INSERT INTO " + TABLE_PRODUCT + " (" + KEY_PRODUCT_ID + ", " + KEY_PRODUCT_TITLE + "," + KEY_PRODUCT_IMAGE + ","
+                + KEY_PRODUCT_CATEGORY + ") VALUES (1, 'LAPTOP MAC', 1, 'TECHNOLOGY')");
     }
 
     @Override

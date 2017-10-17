@@ -33,13 +33,12 @@ public class FragmentTechnology extends Fragment {
         View view = inflater.inflate(R.layout.fragment_technology, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.fragment_technology_recycler_view);
         //improve performance
-        recyclerView.setHasFixedSize(true);
         mlayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mlayoutManager);
 
         ItemProductControl itemProductControl = new ItemProductControl();
         myDataSet = itemProductControl.getProductsWhere(
-                null, DataBaseHandler.KEY_PRODUCT_ID + " ASC",
+                "C.name = 'TECHNOLOGY'", DataBaseHandler.KEY_PRODUCT_ID + " ASC",
                 DataBaseHandler.getInstance(getActivity()));
 
         mAdapter = new AdapterProduct(myDataSet, getActivity());

@@ -98,7 +98,7 @@ public class ItemProductControl {
                     + DataBaseHandler.TABLE_PRODUCT + " P,"
                     + DataBaseHandler.TABLE_CATEGORY + " C WHERE "
                     + " P." + DataBaseHandler.KEY_PRODUCT_CATEGORY
-                    + " = C." + DataBaseHandler.KEY_CATEGORY_ID + " "
+                    + " = C." + DataBaseHandler.KEY_CATEGORY_ID + " AND "
                     + strWhere + " ORDER BY " + strOrderBy;
         }else{
             query = "SELECT P." + DataBaseHandler.KEY_PRODUCT_ID + ","
