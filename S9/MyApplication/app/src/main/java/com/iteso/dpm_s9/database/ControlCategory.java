@@ -12,13 +12,13 @@ import java.util.ArrayList;
  * Created by Maritza on 16/10/2017.
  */
 
-public class CategoryControl {
+public class ControlCategory {
     public ArrayList<Category> getAllCategories(DataBaseHandler dh) {
 
         ArrayList<Category> categories = new ArrayList<Category>();
-        String query = "SELECT C." + DataBaseHandler.KEY_CATEGORY_ID + ","
-                        + "C." + DataBaseHandler.KEY_CATEGORY_NAME + " FROM "
-                        + DataBaseHandler.TABLE_CATEGORY + " C";
+        String query = "SELECT " + DataBaseHandler.KEY_CATEGORY_ID + ","
+                        + DataBaseHandler.KEY_CATEGORY_NAME + " FROM "
+                        + DataBaseHandler.TABLE_CATEGORY;
 
         SQLiteDatabase db = dh.getReadableDatabase();
         Cursor cursor = db.rawQuery(query,null);
@@ -30,6 +30,7 @@ public class CategoryControl {
         }
 
         try {
+            cursor.close();
             db.close();
         } catch (Exception e) {
 

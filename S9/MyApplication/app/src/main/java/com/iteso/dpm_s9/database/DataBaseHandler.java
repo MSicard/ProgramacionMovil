@@ -16,6 +16,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String TABLE_PRODUCT = "product";
     public static final String TABLE_CITY = "city";
     public static final String TABLE_CATEGORY = "category";
+    public static final String TABLE_STORE_PRODUCT = "storeproduct";
+
     // Store
     public static final String KEY_STORE_ID = "idStore";
     public static final String KEY_STORE_NAME = "name";
@@ -94,6 +96,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 + KEY_STORE_LAT + "," + KEY_STORE_LNG + ") VALUES ('BESTBUY', '01 800 237 8289', 2, 0, 20.6489713, -103.4207757)");
         db.execSQL("INSERT INTO " + TABLE_PRODUCT + " (" + KEY_PRODUCT_ID + ", " + KEY_PRODUCT_TITLE + "," + KEY_PRODUCT_IMAGE + ","
                 + KEY_PRODUCT_CATEGORY + ") VALUES (1, 'LAPTOP MAC', 1, 'TECHNOLOGY')");
+
+        String CREATE_STORE_PRODUCT_TABLE = "CREATE TABLE " + TABLE_STORE_PRODUCT + "("
+                + KEY_STORE_ID + " INTEGER,"
+                + KEY_PRODUCT_ID + " INTEGER)";
+        db.execSQL(CREATE_STORE_PRODUCT_TABLE);
+
     }
 
     @Override

@@ -13,9 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.iteso.dpm_s9.beans.ItemProduct;
+import com.iteso.dpm_s9.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -26,10 +26,12 @@ import java.util.ArrayList;
 public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHolder> {
     private ArrayList<ItemProduct> mDataSet;
     private Context context;
+    private int fragment;
 
-    public AdapterProduct(ArrayList data, Context context){
+    public AdapterProduct(ArrayList data, Context context, int fragment){
         this.mDataSet = data;
         this.context = context;
+        this.fragment = fragment;
     }
 
     @Override
@@ -61,8 +63,19 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
         holder.mDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, mDataSet.get(position).toString(),
-                        Toast.LENGTH_LONG).show();
+                showDetail(position);
+
+            }
+        });
+
+        holder.mShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                sendIntent.setType("text/plain");
+                context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.send_to)));
             }
         });
 
@@ -83,9 +96,21 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
                 context.startActivity(intent);
             }
         });
+
+        holder.mEventLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDetail(position);
+            }
+        });
     }
 
-
+    private void showDetail(final int position){
+            Intent intent = new Intent(context, ActivityDetail.class);
+            intent.putExtra(Constants.EXTRA_ITEM, mDataSet.get(position));
+            intent.putExtra(Constants.EXTRA_FRAGMENT, fragment);
+            ((ActivityMain) context).startActivityForResult(intent, Constants.INTENT_DETAIL);
+        }
     @Override
     public int getItemCount() {
         return mDataSet.size();
@@ -93,6 +118,7 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public Button mDetail;
+        public Button mShare;
         public TextView mProductTitle;
         public TextView mProductStore;
         public TextView mProductLocation;
@@ -110,6 +136,8 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
             mProductPhone = (TextView) v.findViewById(R.id.item_product_phone);
             mProductImage = (ImageView) v.findViewById(R.id.item_product_image);
             mProductThumbnail = (ImageView) v.findViewById(R.id.item_product_thumbnail);
+            mShare = (Button)v.findViewById(R.id.item_product_share);
         }
     }
+
 }

@@ -1,7 +1,6 @@
 package com.iteso.dpm_s9;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,16 +9,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.iteso.dpm_s9.beans.ItemProduct;
+import com.iteso.dpm_s9.database.ControlProduct;
 import com.iteso.dpm_s9.database.DataBaseHandler;
-import com.iteso.dpm_s9.database.ItemProductControl;
+import com.iteso.dpm_s9.database.ControlItemProduct;
+import com.iteso.dpm_s9.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class FragmentElectronics extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mlayoutManager;
     private ArrayList myDataSet;
+    DataBaseHandler dh;
+    ControlProduct controlProduct;
+
     public FragmentElectronics() {
         // Required empty public constructor
     }
@@ -36,14 +42,30 @@ public class FragmentElectronics extends Fragment {
         mlayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mlayoutManager);
 
-        ItemProductControl itemProductControl = new ItemProductControl();
-        myDataSet = itemProductControl.getProductsWhere(
+        ControlItemProduct controlItemProduct = new ControlItemProduct();
+        myDataSet = controlItemProduct.getProductsWhere(
                 "C.name = 'ELECTRONICS'", DataBaseHandler.KEY_PRODUCT_ID + " ASC",
                 DataBaseHandler.getInstance(getActivity()));
 
-        mAdapter = new AdapterProduct(myDataSet, getActivity());
+        mAdapter = new AdapterProduct(myDataSet, getActivity(), Constants.FRAGMENT_ELECTRONICS);
         recyclerView.setAdapter(mAdapter);
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ItemProduct itemProduct = data.getParcelableExtra(Constants.EXTRA_ITEM);
+        Iterator<ItemProduct> iterator = myDataSet.iterator();
+        int position = 0;
+        while(iterator.hasNext()){
+            ItemProduct item = iterator.next();
+            if(item.getCode() == itemProduct.getCode()){
+                myDataSet.set(position, itemProduct);
+                break;
+            }
+            position++;
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
 }

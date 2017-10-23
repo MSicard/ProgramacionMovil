@@ -1,7 +1,5 @@
 package com.iteso.dpm_s9;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +15,10 @@ import android.widget.Spinner;
 import com.iteso.dpm_s9.beans.Category;
 import com.iteso.dpm_s9.beans.ItemProduct;
 import com.iteso.dpm_s9.beans.Store;
-import com.iteso.dpm_s9.database.CategoryControl;
+import com.iteso.dpm_s9.database.ControlCategory;
 import com.iteso.dpm_s9.database.DataBaseHandler;
-import com.iteso.dpm_s9.database.ItemProductControl;
-import com.iteso.dpm_s9.database.StoreControl;
+import com.iteso.dpm_s9.database.ControlItemProduct;
+import com.iteso.dpm_s9.database.ControlStore;
 
 import java.util.ArrayList;
 
@@ -54,28 +52,17 @@ public class ActivityProduct extends AppCompatActivity {
         id = (EditText)findViewById(R.id.activity_product_id);
         title = (EditText)findViewById(R.id.activity_product_title);
         description = (EditText)findViewById(R.id.activity_product_description);
-        storeSelected = null;
-        categorySelected = null;
-        imageSelected = -1;
 
         //DataBase Objects
         dh = DataBaseHandler.getInstance(this);
-        StoreControl storeControl = new StoreControl();
-        CategoryControl categoryControl = new CategoryControl();
+        ControlStore storeControl = new ControlStore();
+        ControlCategory categoryControl = new ControlCategory();
         //Fill info from Database
-        ArrayList<Store> storesList = storeControl.getStoresWhere(null, null, dh);
-        ArrayList<Category> categoriesList = categoryControl.getAllCategories(dh);
-        //Create Adapter to show into Spinner, ListView or GridLayout
+        ArrayList<Store> storesList = storeControl.getStores(dh);
         storesAdapter =
-                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, storesList);
+                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, storesList);
         stores.setAdapter(storesAdapter);
-        categoriesAdapter =
-                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categoriesList);
-        categories.setAdapter(categoriesAdapter);
-        ArrayList<String> myimages = new ArrayList<>();
-        myimages.add("Mac"); myimages.add("Alienware");
-        imagesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, myimages);
-        images.setAdapter(imagesAdapter);
+
         stores.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -84,6 +71,31 @@ public class ActivityProduct extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
+
+        ArrayList<Category> categoriesList = categoryControl.getAllCategories(dh);
+        categoriesAdapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesList);
+        categories.setAdapter(categoriesAdapter);
+
+        categories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                categorySelected = categoriesAdapter.getItem(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ArrayList<String> myimages = new ArrayList<>();
+        myimages.add("Mac");
+        myimages.add("Alienware");
+        imagesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, myimages);
+        images.setAdapter(imagesAdapter);
+
+
         images.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -101,20 +113,18 @@ public class ActivityProduct extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_save) {
-            if(isValidProduct()){
+
                 ItemProduct itemProduct = new ItemProduct();
-                itemProduct.setTitle(title.getText().toString().trim());
-                itemProduct.setDescription(description.getText().toString().trim());
+                itemProduct.setTitle(title.getText().toString());
+                itemProduct.setDescription(description.getText().toString());
                 itemProduct.setStore(storeSelected);
                 itemProduct.setCategory(categorySelected);
                 itemProduct.setImage(imageSelected);
-                ItemProductControl itemProductControl = new ItemProductControl();
-                itemProductControl.addItemProduct(itemProduct, dh);
-                Intent intent = new Intent();
-                intent.putExtra("ITEM", itemProduct);
-                setResult(Activity.RESULT_OK, intent);
+                ControlItemProduct controlItemProduct = new ControlItemProduct();
+                controlItemProduct.addProduct(itemProduct, dh);
+
                 finish();
-            }
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -159,10 +169,10 @@ public class ActivityProduct extends AppCompatActivity {
             case R.id.activity_product_search:
                 int idProduct = 0;
                 try {
-                    idProduct = Integer.parseInt(id.getText().toString().trim());
+                    idProduct = Integer.parseInt(id.getText().toString());
                 }catch(NumberFormatException e){ return; }
-                ItemProductControl itemProductControl = new ItemProductControl();
-                ItemProduct itemProduct = itemProductControl.getProductById(idProduct, dh);
+                ControlItemProduct controlItemProduct = new ControlItemProduct();
+                ItemProduct itemProduct = controlItemProduct.getProductById(idProduct, dh);
                 if(itemProduct != null) {
                     title.setText(itemProduct.getTitle());
                     description.setText(itemProduct.getDescription());

@@ -20,7 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.iteso.dpm_s9.beans.ItemProduct;
+import com.iteso.dpm_s9.utils.Constants;
 
 import java.util.Locale;
 
@@ -124,23 +124,33 @@ public class ActivityMain extends AppCompatActivity {
             case R.id.activity_main_products:
                 Intent products = new Intent(this, ActivityProduct.class);
                 startActivityForResult(products, Constants.INTENT_PRODUCTS_NOTIFY);
-                break;
+                return true;
+            case R.id.activity_main_privacy_policy:
+                Intent privacy = new Intent(this, ActivityPrivacyPolicy.class);
+                startActivity(privacy);
+                return true;
         }
         return true;
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case Constants.INTENT_PRODUCTS_NOTIFY:
-                if (resultCode == Activity.RESULT_OK) {
-                    if (data != null) {
-                        ItemProduct itemProduct = data.getParcelableExtra("ITEM");
-                        if (itemProduct.getCategory().getName().equalsIgnoreCase("TECHNOLOGY")) {
-                            fragmentTechnology.notifyDataSetChanged(itemProduct);
-                        }
-                    }
+        if(requestCode == Constants.INTENT_DETAIL){
+            if(resultCode == Activity.RESULT_OK){
+                switch(data.getIntExtra(Constants.EXTRA_FRAGMENT, Constants.FRAGMENT_TECHNOLOGY)){
+                    case Constants.FRAGMENT_TECHNOLOGY:
+                        fragmentTechnology.onActivityResult(requestCode, resultCode, data);
+                        break;
+                    case Constants.FRAGMENT_HOME:
+                        fragmentHome.onActivityResult(requestCode, resultCode, data);
+                        break;
+                    case Constants.FRAGMENT_ELECTRONICS:
+                        fragmentElectronics.onActivityResult(requestCode, resultCode, data);
+                        break;
+                    default:
+                        fragmentTechnology.onActivityResult(requestCode, resultCode, data);
+                        break;
                 }
-                break;
+            }
         }
     }
     private void clearPreferences() {

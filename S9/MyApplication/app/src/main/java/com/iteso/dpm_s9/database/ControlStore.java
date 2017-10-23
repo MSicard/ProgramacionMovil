@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Created by Maritza on 16/10/2017.
  */
 
-public class StoreControl {
+public class ControlStore {
 
     public long addStore(Store store, DataBaseHandler dh) {
         long inserted = 0;
@@ -156,6 +156,7 @@ public class StoreControl {
         }
 
         try {
+            cursor.close();
             db.close();
         } catch (Exception e) {
 
@@ -165,4 +166,90 @@ public class StoreControl {
 
         return stores;
     }
+
+    public Store getStoreByProductId(int idProduct, DataBaseHandler dh) {
+        Store store = new Store();
+        String selectQuery = "SELECT  S." + DataBaseHandler.KEY_STORE_ID + ","
+                + "S." + DataBaseHandler.KEY_STORE_LAT + ","
+                + "S." + DataBaseHandler.KEY_STORE_LNG + ","
+                + "S." + DataBaseHandler.KEY_STORE_NAME + ","
+                + "S." + DataBaseHandler.KEY_STORE_PHONE + ","
+                + "S." + DataBaseHandler.KEY_STORE_THUMBNAIL + ","
+                + "C." + DataBaseHandler.KEY_CITY_ID + ","
+                + "C." + DataBaseHandler.KEY_CITY_NAME
+                + " FROM " + DataBaseHandler.TABLE_STORE + " S, "
+                + DataBaseHandler.TABLE_CITY + " C, "
+                + DataBaseHandler.TABLE_STORE_PRODUCT + " SP WHERE SP."
+                + DataBaseHandler.KEY_PRODUCT_ID + " = " + idProduct + " AND SP." +
+                DataBaseHandler.KEY_STORE_ID + "= S." + DataBaseHandler.KEY_STORE_ID
+                + " AND S." + DataBaseHandler.KEY_STORE_CITY
+                + " = C." + DataBaseHandler.KEY_CITY_ID;
+        SQLiteDatabase db = dh.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            store.setId(cursor.getInt(0));
+            store.setLatitude(cursor.getDouble(1));
+            store.setLongitude(cursor.getDouble(2));
+            store.setName(cursor.getString(3));
+            store.setPhone(cursor.getString(4));
+            store.setThumbnail(cursor.getInt(5));
+            City city = new City();
+            city.setIdCity(cursor.getInt(6));
+            city.setName(cursor.getString(7));
+            store.setCity(city);
+        }
+        try {
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+        }
+        db = null;
+        cursor = null;
+        // return store
+        return store;
+    }
+
+    public ArrayList<Store> getStores(DataBaseHandler dh) {
+        ArrayList<Store> stores = new ArrayList<>();
+        String selectQuery = "SELECT  S." + DataBaseHandler.KEY_STORE_ID + ","
+                + "S." + DataBaseHandler.KEY_STORE_LAT + ","
+                + "S." + DataBaseHandler.KEY_STORE_LNG + ","
+                + "S." + DataBaseHandler.KEY_STORE_NAME + ","
+                + "S." + DataBaseHandler.KEY_STORE_PHONE + ","
+                + "S." + DataBaseHandler.KEY_STORE_THUMBNAIL + ","
+                + "C." + DataBaseHandler.KEY_CITY_ID + ","
+                + "C." + DataBaseHandler.KEY_CITY_NAME
+                + " FROM " + DataBaseHandler.TABLE_STORE + " S, "
+                + DataBaseHandler.TABLE_CITY + " C WHERE S."
+                + DataBaseHandler.KEY_STORE_CITY
+                + " = C." + DataBaseHandler.KEY_CITY_ID;
+        SQLiteDatabase db = dh.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        while (cursor.moveToNext()) {
+            Store store = new Store();
+            store.setId(cursor.getInt(0));
+            store.setLatitude(cursor.getDouble(1));
+            store.setLongitude(cursor.getDouble(2));
+            store.setName(cursor.getString(3));
+            store.setPhone(cursor.getString(4));
+            store.setThumbnail(cursor.getInt(5));
+            City city = new City();
+            city.setIdCity(cursor.getInt(6));
+            city.setName(cursor.getString(7));
+            store.setCity(city);
+            stores.add(store);
+        }
+        try {
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+        }
+        db = null;
+        cursor = null;
+        // return store
+        return stores;
+    }
+
 }
