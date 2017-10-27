@@ -3,6 +3,7 @@ package com.iteso.dpm_s9;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.iteso.dpm_s9.beans.Category;
 import com.iteso.dpm_s9.beans.ItemProduct;
@@ -174,6 +176,7 @@ public class ActivityProduct extends AppCompatActivity {
                 ControlItemProduct controlItemProduct = new ControlItemProduct();
                 ItemProduct itemProduct = controlItemProduct.getProductById(idProduct, dh);
                 if(itemProduct != null) {
+                    Toast.makeText(this, "Item:" + itemProduct, Toast.LENGTH_LONG).show();
                     title.setText(itemProduct.getTitle());
                     description.setText(itemProduct.getDescription());
                     if(itemProduct.getCategory() != null) {

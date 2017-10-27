@@ -112,4 +112,9 @@ public class ItemProduct implements Parcelable{
     public void setStore(Store store) {
         this.store = store;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

@@ -3,6 +3,7 @@ package com.iteso.dpm_s9.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.iteso.dpm_s9.beans.Category;
 import com.iteso.dpm_s9.beans.City;
@@ -93,6 +94,7 @@ public class ControlItemProduct {
         String selectQuery = "SELECT P." + DataBaseHandler.KEY_PRODUCT_ID + ","
                 + "P." + DataBaseHandler.KEY_PRODUCT_TITLE + ","
                 + "P." + DataBaseHandler.KEY_PRODUCT_IMAGE + ","
+                + "P." + DataBaseHandler.KEY_PRODUCT_CATEGORY + ","
                 + "C." + DataBaseHandler.KEY_CATEGORY_ID + ","
                 + "C." + DataBaseHandler.KEY_CATEGORY_NAME + " FROM "
                 + DataBaseHandler.TABLE_PRODUCT + " P,"
@@ -102,13 +104,14 @@ public class ControlItemProduct {
                 + " = C." + DataBaseHandler.KEY_CATEGORY_ID;
         SQLiteDatabase db = dh.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
+        Log.v("Product", selectQuery);
         if (cursor.moveToFirst()) {
             product.setCode(cursor.getInt(0));
             product.setTitle(cursor.getString(1));
             product.setImage(cursor.getInt(2));
             Category category = new Category();
-            category.setIdCategory(cursor.getInt(3));
-            category.setName(cursor.getString(4));
+            category.setIdCategory(cursor.getInt(4));
+            category.setName(cursor.getString(5));
             product.setCategory(category);
         }
         try {cursor.close();db.close();

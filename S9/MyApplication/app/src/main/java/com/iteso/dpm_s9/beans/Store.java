@@ -117,4 +117,9 @@ public class Store implements Parcelable {
         parcel.writeString(phone);
         parcel.writeParcelable(city, i);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
