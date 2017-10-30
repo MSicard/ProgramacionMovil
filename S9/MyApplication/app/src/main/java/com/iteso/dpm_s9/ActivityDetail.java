@@ -27,6 +27,8 @@ public class ActivityDetail extends AppCompatActivity{
         store = (EditText) findViewById(R.id.activity_detail_store);
         image = (ImageView) findViewById(R.id.activity_detail_image);
         save = (Button) findViewById(R.id.activity_detail_save);
+        location = (EditText)findViewById(R.id.activity_detail_location);
+
 
         final ItemProduct itemProduct = getIntent().getParcelableExtra("ITEM");
         title.setText(itemProduct.getTitle());
