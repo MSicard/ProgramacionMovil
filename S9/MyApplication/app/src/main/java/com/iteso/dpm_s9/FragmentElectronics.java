@@ -41,8 +41,10 @@ public class FragmentElectronics extends Fragment {
         mlayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mlayoutManager);
 
+        dh = DataBaseHandler.getInstance(getActivity());
         controlItemProduct = new ControlItemProduct();
-        myDataSet = controlItemProduct.getProducts(Constants.FRAGMENT_ELECTRONICS, dh);
+        myDataSet = controlItemProduct.getProducts(
+                Constants.FRAGMENT_ELECTRONICS, dh);
 
         mAdapter = new AdapterProduct(myDataSet, getActivity(), Constants.FRAGMENT_ELECTRONICS);
         recyclerView.setAdapter(mAdapter);

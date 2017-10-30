@@ -49,7 +49,7 @@ public class ContentProviderProducts extends ContentProvider {
     @Override
     public boolean onCreate() {
         Context context = getContext();
-        dh = new DataBaseHandler(context);
+        dh =  DataBaseHandler.getInstance(context);
 
         return true;
     }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <EditText
+        android:id="@+id/activity_main_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type contact name..."
+        android:inputType="textPersonName"
+        android:maxLines="1"
+        android:imeOptions="actionSearch"/>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarStyle="outsideInset"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:descendantFocusability="blocksDescendants"/>
+
+</LinearLayout>

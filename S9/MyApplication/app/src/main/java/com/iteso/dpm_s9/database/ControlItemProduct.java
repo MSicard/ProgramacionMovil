@@ -91,6 +91,8 @@ public class ControlItemProduct {
         }
         db = null;
     }
+
+
     public ItemProduct getProductById(int idProduct, DataBaseHandler dh){
         ItemProduct product = new ItemProduct();
         String selectQuery = "SELECT P." + DataBaseHandler.KEY_PRODUCT_ID + ","
