@@ -44,7 +44,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     private static DataBaseHandler dataBaseHandler;
 
-    private DataBaseHandler(Context context){
+    public DataBaseHandler(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

@@ -26,6 +26,9 @@
         <activity android:name=".ActivityPrivacyPolicy"></activity>
         <activity android:name=".ActivityProduct"
             android:theme="@style/AppTheme2"/>
+        <provider
+            android:authorities="com.iteso.depm_s9.ContentProviderProducts"
+            android:name=".ContentProviderProducts"/>
     </application>
 
 </manifest>

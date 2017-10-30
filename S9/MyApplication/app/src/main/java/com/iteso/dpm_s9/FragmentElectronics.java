@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.iteso.dpm_s9.beans.ItemProduct;
-import com.iteso.dpm_s9.database.ControlProduct;
 import com.iteso.dpm_s9.database.DataBaseHandler;
 import com.iteso.dpm_s9.database.ControlItemProduct;
 import com.iteso.dpm_s9.utils.Constants;
@@ -24,7 +23,7 @@ public class FragmentElectronics extends Fragment {
     private RecyclerView.LayoutManager mlayoutManager;
     private ArrayList myDataSet;
     DataBaseHandler dh;
-    ControlProduct controlProduct;
+    ControlItemProduct controlItemProduct;
 
     public FragmentElectronics() {
         // Required empty public constructor
@@ -42,10 +41,8 @@ public class FragmentElectronics extends Fragment {
         mlayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mlayoutManager);
 
-        ControlItemProduct controlItemProduct = new ControlItemProduct();
-        myDataSet = controlItemProduct.getProductsWhere(
-                "C.name = 'ELECTRONICS'", DataBaseHandler.KEY_PRODUCT_ID + " ASC",
-                DataBaseHandler.getInstance(getActivity()));
+        controlItemProduct = new ControlItemProduct();
+        myDataSet = controlItemProduct.getProducts(Constants.FRAGMENT_ELECTRONICS, dh);
 
         mAdapter = new AdapterProduct(myDataSet, getActivity(), Constants.FRAGMENT_ELECTRONICS);
         recyclerView.setAdapter(mAdapter);

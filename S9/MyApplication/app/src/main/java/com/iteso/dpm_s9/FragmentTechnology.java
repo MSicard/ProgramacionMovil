@@ -23,6 +23,7 @@ public class FragmentTechnology extends Fragment {
     private RecyclerView.LayoutManager mlayoutManager;
     private ArrayList myDataSet;
     private DataBaseHandler dh;
+    ControlItemProduct controlItemProduct;
 
     public FragmentTechnology() {
         // Required empty public constructor
@@ -41,7 +42,7 @@ public class FragmentTechnology extends Fragment {
         recyclerView.setLayoutManager(mlayoutManager);
 
         dh = DataBaseHandler.getInstance(getActivity());
-        ControlItemProduct controlItemProduct = new ControlItemProduct();
+        controlItemProduct = new ControlItemProduct();
         myDataSet = controlItemProduct.getProducts(
                 Constants.FRAGMENT_TECHNOLOGY, dh);
 

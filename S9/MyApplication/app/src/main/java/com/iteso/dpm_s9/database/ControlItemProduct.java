@@ -64,6 +64,7 @@ public class ControlItemProduct {
         values = null;
         return inserted;
     }
+
     public int updateProduct(ItemProduct product, DataBaseHandler dh){
         long inserted = 0;
         SQLiteDatabase db = dh.getWritableDatabase();
@@ -79,6 +80,7 @@ public class ControlItemProduct {
         db = null;
         return count;
     }
+
     public void deleteProduct(int idProduct, DataBaseHandler dh){
         SQLiteDatabase db = dh.getWritableDatabase();
         db.delete(DataBaseHandler.TABLE_STORE, DataBaseHandler.KEY_PRODUCT_ID
@@ -221,4 +223,23 @@ public class ControlItemProduct {
         return new ControlStore().getStoreByProductId(idProduct, dh);
     }
 
+    public String storeQuery(String id){
+        return  "Select P." + DataBaseHandler.KEY_PRODUCT_TITLE +
+                " C." + DataBaseHandler.KEY_CATEGORY_NAME +
+                " S." + DataBaseHandler.KEY_STORE_ID +
+                " S." + DataBaseHandler.KEY_STORE_NAME +
+                " S." + DataBaseHandler.KEY_STORE_CITY +
+                " S." + DataBaseHandler.KEY_STORE_PHONE +
+                " S." + DataBaseHandler.KEY_STORE_THUMBNAIL +
+                " S." + DataBaseHandler.KEY_STORE_LAT +
+                " S." + DataBaseHandler.KEY_STORE_LNG +
+                " FROM " + DataBaseHandler.TABLE_PRODUCT + " P, " +
+                DataBaseHandler.TABLE_STORE + " S," +
+                DataBaseHandler.TABLE_CATEGORY + " C," +
+                DataBaseHandler.TABLE_STORE_PRODUCT + " SP WHERE P." +
+                DataBaseHandler.KEY_PRODUCT_CATEGORY + " = C." + DataBaseHandler.KEY_CATEGORY_ID +
+                " AND SP." + DataBaseHandler.KEY_PRODUCT_ID + " = P." + DataBaseHandler.KEY_PRODUCT_ID +
+                " AND SP." + DataBaseHandler.KEY_STORE_ID + " = P." + DataBaseHandler.KEY_STORE_ID +
+                " AND P." + DataBaseHandler.KEY_PRODUCT_ID + " = " + id;
+    }
 }

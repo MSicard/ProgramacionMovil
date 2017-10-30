@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.iteso.dpm_s9.beans.ItemProduct;
-import com.iteso.dpm_s9.database.ControlProduct;
+import com.iteso.dpm_s9.database.ControlItemProduct;
 import com.iteso.dpm_s9.database.DataBaseHandler;
 import com.iteso.dpm_s9.utils.Constants;
 
@@ -24,7 +24,7 @@ public class FragmentHome extends Fragment {
     private ArrayList myDataSet;
 
     DataBaseHandler dh;
-    ControlProduct controlProduct;
+    ControlItemProduct controlProduct;
 
     public FragmentHome() {
         // Required empty public constructor
@@ -43,7 +43,7 @@ public class FragmentHome extends Fragment {
         recyclerView.setLayoutManager(mlayoutManager);
 
         dh = DataBaseHandler.getInstance(getActivity());
-        controlProduct = new ControlProduct();
+        controlProduct = new ControlItemProduct();
         myDataSet = controlProduct.getProducts(Constants.FRAGMENT_HOME, dh);
 
         mAdapter = new AdapterProduct(myDataSet, getActivity(), Constants.FRAGMENT_HOME);
