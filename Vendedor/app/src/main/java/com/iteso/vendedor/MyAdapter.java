@@ -49,16 +49,8 @@ class MyAdapter  extends SimpleCursorAdapter {
         super.bindView(view, context, cursor);
 
         TextView category = (TextView) view.findViewById(R.id.product_item_category);
-
-        /*position.setText(String.valueOf(cursor.getPosition()));
-        name.setText( cursor.getString(cursor.getColumnIndex(Constants.KEY_PRODUCT_TITLE)));*/
         int idCategory = cursor.getInt(cursor.getColumnIndex(Constants.KEY_PRODUCT_CATEGORY));
 
-        /*int id = cursor.getInt(0);
-        String nombre = cursor.getString(1);
-        int image = cursor.getInt(2);
-        int category2 = cursor.getInt(3);
-        Log.d("QUERY", "" +id+ ", " +nombre+ ", " +image+ ", " + category2);*/
         switch (idCategory){
             case Constants.FRAGMENT_ELECTRONICS:
                 category.setText("Electronics");
