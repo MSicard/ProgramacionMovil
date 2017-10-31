@@ -29,6 +29,8 @@
         <provider
             android:authorities="com.iteso.dpm_s9"
             android:name=".provider.ContentProviderProducts"
+            android:enabled="true"
+            android:multiprocess="true"
             android:exported="true"/>
     </application>
 

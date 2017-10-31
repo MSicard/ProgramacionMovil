@@ -47,9 +47,10 @@ class MyAdapter  extends SimpleCursorAdapter {
     @Override
     public void bindView(View view, final Context context, final Cursor cursor) {
         super.bindView(view, context, cursor);
-
+        TextView name = (TextView) view.findViewById(R.id.product_item_name);
         TextView category = (TextView) view.findViewById(R.id.product_item_category);
         int idCategory = cursor.getInt(cursor.getColumnIndex(Constants.KEY_PRODUCT_CATEGORY));
+        final int idProduct = cursor.getInt(cursor.getColumnIndex(Constants.KEY_PRODUCT_ID));
 
         switch (idCategory){
             case Constants.FRAGMENT_ELECTRONICS:
@@ -62,6 +63,15 @@ class MyAdapter  extends SimpleCursorAdapter {
                 category.setText("Technology");
                 break;
         }
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ActivityDetail.class);
+                intent.putExtra("idP", idProduct);
+                context.startActivity(intent);
+            }
+        });
     }
 
 

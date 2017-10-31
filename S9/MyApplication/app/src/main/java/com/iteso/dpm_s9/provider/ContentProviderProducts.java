@@ -36,14 +36,12 @@ public class ContentProviderProducts extends ContentProvider {
 
     static final int PRODUCTS = 1;
     static final int PRODUCTS_ID = 2;
-    static final int PRODUCT_STORE = 3;
 
     static final UriMatcher uriMatcher;
     static{
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(PROVIDER_NAME, "products", PRODUCTS);
         uriMatcher.addURI(PROVIDER_NAME, "products/#", PRODUCTS_ID);
-        uriMatcher.addURI(PROVIDER_NAME, "products/store/#", PRODUCT_STORE);
     }
 
     @Override
@@ -65,11 +63,6 @@ public class ContentProviderProducts extends ContentProvider {
                         selectionArgs, null, null, sortOrder);
                  return c;
             case PRODUCTS_ID:
-                String where = dh.KEY_PRODUCT_ID + "=" + uri.getLastPathSegment();
-                c = db.query(dh.TABLE_PRODUCT, projection, where,
-                        selectionArgs, null, null, sortOrder);
-                return c;
-            case PRODUCT_STORE:
                 return new ControlItemProduct().getStoreByIdProduct(uri.getLastPathSegment(), dh);
             default:
                 throw new UnsupportedOperationException("Uri no soportada");
@@ -90,8 +83,6 @@ public class ContentProviderProducts extends ContentProvider {
              */
             case PRODUCTS_ID:
                 return "vnd.android.cursor.item/vnd.iteso.dpm_s9.products";
-            case PRODUCT_STORE:
-                return "vnd.android.cursos.item/vnd.iteso.dpm_s9.products";
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
