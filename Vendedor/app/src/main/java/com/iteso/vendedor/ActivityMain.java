@@ -30,8 +30,9 @@ public class ActivityMain extends AppCompatActivity implements
     String[] PROJECTION = new String[]{
             Constants.KEY_PRODUCT_ID,
             Constants.KEY_PRODUCT_TITLE,
-            Constants.KEY_PRODUCT_IMAGE,
-            Constants.KEY_PRODUCT_CATEGORY};
+            Constants.KEY_PRODUCT_CATEGORY,
+            Constants.KEY_CATEGORY_NAME
+    };
 
     private final static String[] FROM_COLUMNS = {Constants.KEY_PRODUCT_ID,
             Constants.KEY_PRODUCT_TITLE, Constants.KEY_CATEGORY_NAME};

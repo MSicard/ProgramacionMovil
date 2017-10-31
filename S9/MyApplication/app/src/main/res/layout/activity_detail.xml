@@ -20,9 +20,5 @@
         android:id="@+id/activity_detail_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/activity_detail_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Guardar"/>
+
 </LinearLayout>

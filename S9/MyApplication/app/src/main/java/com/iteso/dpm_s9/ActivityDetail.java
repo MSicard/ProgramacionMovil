@@ -16,7 +16,6 @@ import com.iteso.dpm_s9.beans.ItemProduct;
 public class ActivityDetail extends AppCompatActivity{
     protected EditText title, store, location;
     protected ImageView image;
-    protected Button save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,6 @@ public class ActivityDetail extends AppCompatActivity{
         title = (EditText) findViewById(R.id.activity_detail_title);
         store = (EditText) findViewById(R.id.activity_detail_store);
         image = (ImageView) findViewById(R.id.activity_detail_image);
-        save = (Button) findViewById(R.id.activity_detail_save);
         location = (EditText)findViewById(R.id.activity_detail_location);
 
 
@@ -45,14 +43,5 @@ public class ActivityDetail extends AppCompatActivity{
                 break;
         }
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemProduct.setImage(image.getId());
-                itemProduct.setTitle(title.getText().toString());
-                itemProduct.getStore().setName(store.getText().toString());
-                itemProduct.getStore().getCity().setName(location.getText().toString());
-            }
-        });
     }
 }

@@ -249,9 +249,10 @@ public class ControlItemProduct {
 
 
     public  Cursor getProducts(DataBaseHandler dh){
-        String selectQuery = "Select P." + DataBaseHandler.KEY_PRODUCT_TITLE + "," +
-                             " C." + DataBaseHandler.KEY_CATEGORY_NAME + "," +
-                             " P." + DataBaseHandler.KEY_PRODUCT_ID +
+        String selectQuery = "SELECT P." + DataBaseHandler.KEY_PRODUCT_ID + "," +
+                             " P." + DataBaseHandler.KEY_PRODUCT_TITLE + "," +
+                             " P." + DataBaseHandler.KEY_PRODUCT_CATEGORY + "," +
+                             " C." + DataBaseHandler.KEY_CATEGORY_NAME  +
                              " FROM " + DataBaseHandler.TABLE_PRODUCT + " P," +
                              DataBaseHandler.TABLE_CATEGORY + " C" +
                              " WHERE " +
