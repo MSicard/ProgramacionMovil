@@ -246,6 +246,20 @@ public class ControlItemProduct {
         Cursor cursor = db.rawQuery(selectQuery, null);
         return cursor;
     }
+
+
+    public  Cursor getProducts(DataBaseHandler dh){
+        String selectQuery = "Select P." + DataBaseHandler.KEY_PRODUCT_TITLE + "," +
+                             " C." + DataBaseHandler.KEY_CATEGORY_NAME + "," +
+                             " P." + DataBaseHandler.KEY_PRODUCT_ID +
+                             " FROM " + DataBaseHandler.TABLE_PRODUCT + " P," +
+                             DataBaseHandler.TABLE_CATEGORY + " C" +
+                             " WHERE " +
+                             " P." + DataBaseHandler.KEY_PRODUCT_CATEGORY + " = C." + DataBaseHandler.KEY_CATEGORY_ID;
+                SQLiteDatabase db = dh.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor;
+    }
 }
 
 

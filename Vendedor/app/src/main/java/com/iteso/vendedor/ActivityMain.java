@@ -34,9 +34,9 @@ public class ActivityMain extends AppCompatActivity implements
             Constants.KEY_PRODUCT_CATEGORY};
 
     private final static String[] FROM_COLUMNS = {Constants.KEY_PRODUCT_ID,
-            Constants.KEY_PRODUCT_TITLE};
+            Constants.KEY_PRODUCT_TITLE, Constants.KEY_CATEGORY_NAME};
     private final static int[] TO_IDS = {R.id.product_item_position,
-            R.id.product_item_name};
+            R.id.product_item_name, R.id.product_item_category};
 
 
     @Override

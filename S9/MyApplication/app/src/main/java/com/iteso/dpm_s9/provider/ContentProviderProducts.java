@@ -57,13 +57,15 @@ public class ContentProviderProducts extends ContentProvider {
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         db = dh.getReadableDatabase();
         Cursor c;
+        ControlItemProduct cip = new ControlItemProduct();
         switch (uriMatcher.match(uri)){
             case PRODUCTS:
-                 c = db.query(dh.TABLE_PRODUCT, projection, selection,
+                return cip.getProducts(dh);
+                /* c = db.query(dh.TABLE_PRODUCT, projection, selection,
                         selectionArgs, null, null, sortOrder);
-                 return c;
+                 return c;*/
             case PRODUCTS_ID:
-                return new ControlItemProduct().getStoreByIdProduct(uri.getLastPathSegment(), dh);
+                return cip.getStoreByIdProduct(uri.getLastPathSegment(), dh);
             default:
                 throw new UnsupportedOperationException("Uri no soportada");
         }

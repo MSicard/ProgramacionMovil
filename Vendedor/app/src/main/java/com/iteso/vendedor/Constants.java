@@ -12,9 +12,11 @@ public class Constants {
     public static final String KEY_PRODUCT_IMAGE = "image";
     public static final String KEY_PRODUCT_CATEGORY = "idCategory";
 
-    public static final int FRAGMENT_TECHNOLOGY = 0;
-    public static final int FRAGMENT_HOME = 1;
-    public static final int FRAGMENT_ELECTRONICS = 2;
+    // Columns Category
+    public static final String KEY_CATEGORY_ID = "idCategory";
+    public static final String KEY_CATEGORY_NAME = "name";
+
+
 
     static final String PROVIDER_NAME = "com.iteso.dpm_s9";
 }
