@@ -24,9 +24,6 @@ public class ActivityDetail extends Activity{
 
     String [] PROJECTION = { "" };
 
-    static final String PROVIDER_NAME = "com.iteso.dpm_s9";
-    static final String URL = "content://" + PROVIDER_NAME + "/products/";
-    //static final Uri CONTENT_URI = Uri.parse(URL);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +36,7 @@ public class ActivityDetail extends Activity{
         city = (TextView)findViewById(R.id.activity_detail_city);
 
         int idProduct = getIntent().getExtras().getInt("idP");
-        Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME + "/products/" + idProduct);
+        Uri CONTENT_URI = Uri.parse("content://" + Constants.PROVIDER_NAME + "/products/" + idProduct);
         ContentResolver cr = getContentResolver();
         Cursor c = cr.query(CONTENT_URI,PROJECTION,null,null,null);
 

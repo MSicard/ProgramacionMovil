@@ -16,8 +16,7 @@ import android.widget.ListView;
 public class ActivityMain extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor>{
 
-    static final String PROVIDER_NAME = "com.iteso.dpm_s9";
-    static final String URL = "content://" + PROVIDER_NAME + "/products";
+    static final String URL = "content://" + Constants.PROVIDER_NAME + "/products";
     static final Uri CONTENT_URI = Uri.parse(URL);
 
 

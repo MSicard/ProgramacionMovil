@@ -31,19 +31,6 @@ class MyAdapter  extends SimpleCursorAdapter {
         this.inflater = LayoutInflater.from(context);
     }
 
-    // The contact's _ID value
-    private long mProductId;
-    // The contact's LOOKUP_KEY
-    private String mProductKey;
-
-    // The column index for the _ID column
-    private static final int PRODUCT_ID_INDEX = 0;
-
-    private static final int PRODUCT_NAME_INDEX = 1;
-    // The column index for the LOOKUP_KEY column
-    private static final int CATEGORY_COLUMN = 2;
-
-
     @Override
     public void bindView(View view, final Context context, final Cursor cursor) {
         super.bindView(view, context, cursor);
@@ -73,8 +60,6 @@ class MyAdapter  extends SimpleCursorAdapter {
             }
         });
     }
-
-
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
