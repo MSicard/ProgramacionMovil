@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,39 +37,39 @@ class MyAdapter  extends SimpleCursorAdapter {
     private String mProductKey;
 
     // The column index for the _ID column
-    private static final int CONTACT_ID_INDEX = 0;
+    private static final int PRODUCT_ID_INDEX = 0;
 
+    private static final int PRODUCT_NAME_INDEX = 1;
     // The column index for the LOOKUP_KEY column
-    private static final int LOOKUP_KEY_INDEX = 1;
+    private static final int CATEGORY_COLUMN = 2;
 
-    // The column index for the PHOTO_INDEX column
-    private static final int PHOTO_ID_INDEX = 3;
 
     @Override
     public void bindView(View view, final Context context, final Cursor cursor) {
         super.bindView(view, context, cursor);
-        TextView name = (TextView) view.findViewById(R.id.product_item_name);
-        TextView position = (TextView) view.findViewById(R.id.product_item_position);
+
         TextView category = (TextView) view.findViewById(R.id.product_item_category);
 
-        position.setText(String.valueOf(cursor.getPosition()));
-        final int name_index = cursor.getColumnIndexOrThrow(
-                ContactsContract.Contacts.DISPLAY_NAME_PRIMARY);
-        name.setText(cursor.getString(name_index));
-        //image.setImageBitmap(queryContactImage(cursor.getInt(PHOTO_ID_INDEX)));
-        /*name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int pos = Integer.valueOf(position.getText().toString());
-                cursor.moveToPosition(pos);
-                mProductId = cursor.getLong(CONTACT_ID_INDEX);
-                mProductKey = cursor.getString(LOOKUP_KEY_INDEX);
-                Intent intent = new Intent(context, ActivityDetail.class);
-                intent.putExtra("ContactID", mProductId);
-                intent.putExtra("ContactKEY", mProductKey);
-                context.startActivity(intent);
-            }
-        });*/
+        /*position.setText(String.valueOf(cursor.getPosition()));
+        name.setText( cursor.getString(cursor.getColumnIndex(Constants.KEY_PRODUCT_TITLE)));*/
+        int idCategory = cursor.getInt(cursor.getColumnIndex(Constants.KEY_PRODUCT_CATEGORY));
+
+        /*int id = cursor.getInt(0);
+        String nombre = cursor.getString(1);
+        int image = cursor.getInt(2);
+        int category2 = cursor.getInt(3);
+        Log.d("QUERY", "" +id+ ", " +nombre+ ", " +image+ ", " + category2);*/
+        switch (idCategory){
+            case Constants.FRAGMENT_ELECTRONICS:
+                category.setText("Electronics");
+                break;
+            case Constants.FRAGMENT_HOME:
+                category.setText("Home");
+                break;
+            case Constants.FRAGMENT_TECHNOLOGY:
+                category.setText("Technology");
+                break;
+        }
     }
 
 

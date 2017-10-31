@@ -28,8 +28,12 @@ public class Constants {
     public static final String KEY_CATEGORY_ID = "idCategory";
     public static final String KEY_CATEGORY_NAME = "name";
     // Columns Products
-    public static final String KEY_PRODUCT_ID = "idProduct";
+    public static final String KEY_PRODUCT_ID = "_id";
     public static final String KEY_PRODUCT_TITLE = "name";
     public static final String KEY_PRODUCT_IMAGE = "image";
     public static final String KEY_PRODUCT_CATEGORY = "idCategory";
+
+    public static final int FRAGMENT_TECHNOLOGY = 0;
+    public static final int FRAGMENT_HOME = 1;
+    public static final int FRAGMENT_ELECTRONICS = 2;
 }
