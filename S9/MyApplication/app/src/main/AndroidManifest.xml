@@ -28,7 +28,7 @@
             android:theme="@style/AppTheme2"/>
         <provider
             android:authorities="com.iteso.dpm_s9"
-            android:name=".ContentProviderProducts"
+            android:name=".provider.ContentProviderProducts"
             android:exported="true"/>
     </application>
 

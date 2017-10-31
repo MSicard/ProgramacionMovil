@@ -225,23 +225,30 @@ public class ControlItemProduct {
         return new ControlStore().getStoreByProductId(idProduct, dh);
     }
 
-    public String storeQuery(String id){
-        return  "Select P." + DataBaseHandler.KEY_PRODUCT_TITLE +
-                " C." + DataBaseHandler.KEY_CATEGORY_NAME +
-                " S." + DataBaseHandler.KEY_STORE_ID +
-                " S." + DataBaseHandler.KEY_STORE_NAME +
-                " S." + DataBaseHandler.KEY_STORE_CITY +
-                " S." + DataBaseHandler.KEY_STORE_PHONE +
-                " S." + DataBaseHandler.KEY_STORE_THUMBNAIL +
-                " S." + DataBaseHandler.KEY_STORE_LAT +
-                " S." + DataBaseHandler.KEY_STORE_LNG +
-                " FROM " + DataBaseHandler.TABLE_PRODUCT + " P, " +
-                DataBaseHandler.TABLE_STORE + " S," +
-                DataBaseHandler.TABLE_CATEGORY + " C," +
-                DataBaseHandler.TABLE_STORE_PRODUCT + " SP WHERE P." +
-                DataBaseHandler.KEY_PRODUCT_CATEGORY + " = C." + DataBaseHandler.KEY_CATEGORY_ID +
-                " AND SP." + DataBaseHandler.KEY_PRODUCT_ID + " = P." + DataBaseHandler.KEY_PRODUCT_ID +
-                " AND SP." + DataBaseHandler.KEY_STORE_ID + " = P." + DataBaseHandler.KEY_STORE_ID +
-                " AND P." + DataBaseHandler.KEY_PRODUCT_ID + " = " + id;
+    public Cursor getStoreByIdProduct(String id, DataBaseHandler dh){
+        String selectQuery =
+                "Select P." + DataBaseHandler.KEY_PRODUCT_TITLE +
+                        " C." + DataBaseHandler.KEY_CATEGORY_NAME +
+                        " S." + DataBaseHandler.KEY_STORE_ID +
+                        " S." + DataBaseHandler.KEY_STORE_NAME +
+                        " S." + DataBaseHandler.KEY_STORE_CITY +
+                        " S." + DataBaseHandler.KEY_STORE_PHONE +
+                        " S." + DataBaseHandler.KEY_STORE_THUMBNAIL +
+                        " S." + DataBaseHandler.KEY_STORE_LAT +
+                        " S." + DataBaseHandler.KEY_STORE_LNG +
+                        " Ci." + DataBaseHandler.KEY_CITY_NAME +
+                        " FROM " + DataBaseHandler.TABLE_PRODUCT + " P, " +
+                        DataBaseHandler.TABLE_STORE + " S," +
+                        DataBaseHandler.TABLE_CATEGORY + " C," +
+                        DataBaseHandler.TABLE_CITY + " Ci," +
+                        DataBaseHandler.TABLE_STORE_PRODUCT + " SP WHERE P." +
+                        DataBaseHandler.KEY_PRODUCT_CATEGORY + " = C." + DataBaseHandler.KEY_CATEGORY_ID +
+                        " AND SP." + DataBaseHandler.KEY_PRODUCT_ID + " = P." + DataBaseHandler.KEY_PRODUCT_ID +
+                        " AND SP." + DataBaseHandler.KEY_STORE_ID + " = S." + DataBaseHandler.KEY_STORE_ID +
+                        " AND Ci." + DataBaseHandler.KEY_CITY_ID + " = S." + DataBaseHandler.KEY_STORE_CITY +
+                        " AND P." + DataBaseHandler.KEY_PRODUCT_ID + " = " + id;
+        SQLiteDatabase db = dh.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor;
     }
 }

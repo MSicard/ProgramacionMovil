@@ -166,26 +166,4 @@ public class ActivityProduct extends AppCompatActivity {
         images.setSelection(imageId);
     }
 
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.activity_product_search:
-                int idProduct = 0;
-                try {
-                    idProduct = Integer.parseInt(id.getText().toString());
-                }catch(NumberFormatException e){ return; }
-                ControlItemProduct controlItemProduct = new ControlItemProduct();
-                ItemProduct itemProduct = controlItemProduct.getProductById(idProduct, dh);
-                if(itemProduct != null) {
-                    Toast.makeText(this, "Item:" + itemProduct, Toast.LENGTH_LONG).show();
-                    title.setText(itemProduct.getTitle());
-                    description.setText(itemProduct.getDescription());
-                    if(itemProduct.getCategory() != null) {
-                        setCategorySelected(itemProduct.getCategory().getIdCategory());}
-                    if(itemProduct.getStore()!= null) {
-                        setStoreSelected(itemProduct.getStore().getId());}
-                    setImageSelected(itemProduct.getImage());
-                }
-                break;
-        }
-    }
 }

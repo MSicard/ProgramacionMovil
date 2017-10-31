@@ -46,43 +46,19 @@ public class ActivityMain extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         listView = (ListView) findViewById(android.R.id.list);
-
-        ContentResolver cr = getContentResolver();
-
-        Cursor c = cr.query(CONTENT_URI, PROJECTION, null, null, null);
-
         mCursorAdapter = new MyAdapter(this,
                 R.layout.product_item,
-                c,
+                null,
                 FROM_COLUMNS,
                 TO_IDS,
                 0);
-
-        //testing();
         listView.setAdapter(mCursorAdapter);
-    }
+        getLoaderManager().restartLoader(0, null, this);
 
-    public void testing(){
-        ContentResolver cr = getContentResolver();
-
-        Cursor c = cr.query(CONTENT_URI, PROJECTION, null, null, null);
-        while (c.moveToNext()) {
-            int id = c.getInt(0);
-            String nombre = c.getString(1);
-            int image = c.getInt(2);
-            int category = c.getInt(3);
-            Log.d("QUERY", "" +id+ ", " +nombre+ ", " +image+ ", " + category);
-        }
-        try {
-            c.close();
-        } catch (Exception e) {
-        }
-        c = null;
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        // Starts the query
         return new CursorLoader(
                 ActivityMain.this,
                 CONTENT_URI, PROJECTION,

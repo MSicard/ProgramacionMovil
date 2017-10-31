@@ -1,4 +1,4 @@
-package com.iteso.dpm_s9;
+package com.iteso.dpm_s9.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -70,26 +70,7 @@ public class ContentProviderProducts extends ContentProvider {
                         selectionArgs, null, null, sortOrder);
                 return c;
             case PRODUCT_STORE:
-                String selectQuery =
-                        "Select P." + DataBaseHandler.KEY_PRODUCT_TITLE +
-                                " C." + DataBaseHandler.KEY_CATEGORY_NAME +
-                                " S." + DataBaseHandler.KEY_STORE_ID +
-                                " S." + DataBaseHandler.KEY_STORE_NAME +
-                                " S." + DataBaseHandler.KEY_STORE_CITY +
-                                " S." + DataBaseHandler.KEY_STORE_PHONE +
-                                " S." + DataBaseHandler.KEY_STORE_THUMBNAIL +
-                                " S." + DataBaseHandler.KEY_STORE_LAT +
-                                " S." + DataBaseHandler.KEY_STORE_LNG +
-                                " FROM " + DataBaseHandler.TABLE_PRODUCT + " P, " +
-                                DataBaseHandler.TABLE_STORE + " S," +
-                                DataBaseHandler.TABLE_CATEGORY + " C," +
-                                DataBaseHandler.TABLE_STORE_PRODUCT + " SP WHERE P." +
-                                DataBaseHandler.KEY_PRODUCT_CATEGORY + " = C." + DataBaseHandler.KEY_CATEGORY_ID +
-                                " AND SP." + DataBaseHandler.KEY_PRODUCT_ID + " = P." + DataBaseHandler.KEY_PRODUCT_ID +
-                                " AND SP." + DataBaseHandler.KEY_STORE_ID + " = P." + DataBaseHandler.KEY_STORE_ID +
-                                " AND P." + DataBaseHandler.KEY_PRODUCT_ID + " = " + uri.getLastPathSegment();
-                c = db.rawQuery(selectQuery, null);
-                return c;
+                return new ControlItemProduct().getStoreByIdProduct(uri.getLastPathSegment(), dh);
             default:
                 throw new UnsupportedOperationException("Uri no soportada");
         }
